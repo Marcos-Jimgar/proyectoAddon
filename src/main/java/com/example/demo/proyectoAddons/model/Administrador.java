@@ -15,11 +15,13 @@ import lombok.AllArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Administrador {
+
     @Id
     private Long id;
-    
+
+    // Relación 1:1 con Usuario (lado propietario)
     @OneToOne
-    @JoinColumn(name = "usuario", referencedColumnName = "id", unique = true) 
-    @JsonManagedReference
+    @JoinColumn(name = "usuario", referencedColumnName = "id", unique = true)
+    @JsonManagedReference(value = "admin-usuario")
     private Usuario usuario;
 }

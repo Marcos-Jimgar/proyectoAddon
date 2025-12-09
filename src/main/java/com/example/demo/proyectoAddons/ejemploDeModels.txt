@@ -1,0 +1,50 @@
+
+User:
+{
+  "nombre": "SuperSubscrito",
+  "esDePago": false
+}
+
+Creador:
+{
+  "especialidad": "Mapas Y Add-Ons",
+  "usuario": {
+    "id": 5,
+    "nombre": "SuperCreador",
+    "esDePago": false,
+    "subscripciones": []
+  }
+}
+
+Admin:
+{
+  "usuario": {
+    "id": 5,
+    "nombre": "SuperCreador",
+    "esDePago": false,
+    "subscripciones": []
+  }
+}
+
+subscripcion:
+{
+  "notificar": true,
+  "creador": {
+    "id": 5,
+    "especialidad": "Mapas Y Add-Ons",
+    "usuario": {
+      "id": 5,
+      "nombre": "SuperCreador",
+      "esDePago": false,
+      "subscripciones": []
+    },
+    "subscripciones": [],
+    "addons": []
+  },
+  "usuario": {
+  "id": 6,
+  "nombre": "SuperSubscrito",
+  "esDePago": false,
+  "subscripciones": null
+}
+}

@@ -23,7 +23,7 @@ public Administrador createPersona(@Valid @RequestBody Administrador admin1) {
 return administradorService.createAdministrador(admin1);
 }
 @GetMapping
-public List<Administrador> getDni() {
+public List<Administrador> getAdmins() {
 return administradorService.getAll();
 }
 

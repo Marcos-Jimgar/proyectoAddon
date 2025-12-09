@@ -3,9 +3,9 @@ package com.example.demo.proyectoAddons.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
-import com.example.demo.proyectoAddons.model.Usuario;
+import com.example.demo.proyectoAddons.model.Addon;
 
-public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
+public interface AddonRepository extends JpaRepository<Addon, Long> {
 
 }
 

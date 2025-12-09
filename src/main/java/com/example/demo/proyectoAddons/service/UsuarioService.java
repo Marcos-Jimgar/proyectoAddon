@@ -11,15 +11,13 @@ import java.util.List;
 public class UsuarioService {
 
     @Autowired
-    private UsuarioRepository usuarioRepository;  // Debes inyectar el repositorio, no la entidad
-
+    private UsuarioRepository usuarioRepository; 
     public Usuario createUsuario(Usuario usuario) {
-        // Lógica para crear un Usuario
-        return usuarioRepository.save(usuario); // Usamos el repositorio para guardar la entidad
+        return usuarioRepository.save(usuario); 
     }
 
     public List<Usuario> getAllUsuarios() {
-        return usuarioRepository.findAll(); // Devuelve todos los usuarios
+        return usuarioRepository.findAll(); 
     }
 
     public void borrarUsuarios() {
