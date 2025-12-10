@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 
 import com.example.demo.proyectoAddons.model.Creador;
-
+import com.example.demo.proyectoAddons.model.Usuario;
 import com.example.demo.proyectoAddons.repository.CreadorrRepository;
 
 
@@ -25,7 +25,6 @@ public class CreadorService {
         return creadorRepository.save(creador);
     }
 
-
     public List<Creador> getAll() {
         return creadorRepository.findAll();
     }
@@ -35,5 +34,11 @@ public class CreadorService {
         return "Datos Borrados";
     }
 
+    public boolean creadorExiste(Long id) {
+        return creadorRepository.findById(id).isPresent();
+    }
 
+    public Creador devolverCreador(Long id) {
+        return creadorRepository.findById(id).orElse(null);
+    }
 }

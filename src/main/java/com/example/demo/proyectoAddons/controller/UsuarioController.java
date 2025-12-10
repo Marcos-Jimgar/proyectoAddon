@@ -20,9 +20,15 @@ private UsuarioService usuarioService;
 public Usuario createPersona(@Valid @RequestBody Usuario codBar) {
 return usuarioService.createUsuario(codBar);
 }
+
 @GetMapping
 public List<Usuario> getAllUsuarios() {
 return usuarioService.getAllUsuarios();
+}
+
+@GetMapping("/{id}")
+public boolean usuarioExiste(@PathVariable Long id) {
+return usuarioService.usuarioExiste(id);
 }
 
 @DeleteMapping

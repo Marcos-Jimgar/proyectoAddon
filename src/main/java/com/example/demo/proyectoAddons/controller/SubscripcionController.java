@@ -19,7 +19,7 @@ public class SubscripcionController {
 private SubscripcionService subsService;
 
 @PostMapping
-public Subscripcion createPersona(@Valid @RequestBody Subscripcion subscripcion) {
+public Subscripcion createSubscripcion(@Valid @RequestBody Subscripcion subscripcion) {
 return subsService.createSubscripcion(subscripcion);
 }
 @GetMapping

@@ -1,50 +1,81 @@
 
 User:
 {
-  "nombre": "SuperSubscrito",
+  "nombre": "Subscriptor1",
+  "email": "creado@gmail",
+  "password": "12345678",
   "esDePago": false
 }
 
 Creador:
 {
-  "especialidad": "Mapas Y Add-Ons",
+  "especialidad": "Crear Maps",
   "usuario": {
-    "id": 5,
-    "nombre": "SuperCreador",
-    "esDePago": false,
-    "subscripciones": []
-  }
+  "id": 2,
+  "nombre": "Creador1",
+  "email": "creador@gmail",
+  "password": "12345678",
+  "esDePago": false,
+  "subscripciones": []
+}
 }
 
 Admin:
 {
   "usuario": {
-    "id": 5,
-    "nombre": "SuperCreador",
-    "esDePago": false,
-    "subscripciones": []
-  }
+  "id": 5,
+  "nombre": "admin",
+  "email": "admin@gmail",
+  "password": "12345678",
+  "esDePago": false,
+  "subscripciones": null
+}
 }
 
 subscripcion:
 {
   "notificar": true,
   "creador": {
-    "id": 5,
-    "especialidad": "Mapas Y Add-Ons",
-    "usuario": {
-      "id": 5,
-      "nombre": "SuperCreador",
-      "esDePago": false,
-      "subscripciones": []
-    },
-    "subscripciones": [],
-    "addons": []
-  },
+  "id": 2,
+  "especialidad": "Crear Maps",
   "usuario": {
-  "id": 6,
-  "nombre": "SuperSubscrito",
-  "esDePago": false,
-  "subscripciones": null
+    "id": 2,
+    "nombre": "Creador1",
+    "email": "creador@gmail",
+    "password": "12345678",
+    "esDePago": false,
+    "subscripciones": []
+  },
+  "subscripciones": null,
+  "addons": null
+},
+  "usuario": {
+    "id": 1,
+    "nombre": "SuperSubscrito",
+    "email": "marcos@gmail",
+    "password": "12345678",
+    "esDePago": false,
+    "subscripciones": []
+  }
 }
+
+
+Addon:
+{
+  "nombre": "Paquete de Skins de Fantasy",
+  "tipo": "Skin",
+  "urlMiniatura": "https://miapp.com/skins/fantasy.png",
+  "descripcion": "Este paquete contiene más de 20 skins únicas inspiradas en personajes de fantasía medieval, incluyendo armaduras, criaturas mágicas y más."
 }
+
+
+
+Borrar TODO (hace falta si cambio algo)
+DROP TABLE IF EXISTS creador_addon;
+DROP TABLE IF EXISTS subscripcion;
+DROP TABLE IF EXISTS administrador;
+DROP TABLE IF EXISTS creador;
+DROP TABLE IF EXISTS usuario;
+DROP TABLE IF EXISTS addon;
+
+//me falta el añadir un creador al addon

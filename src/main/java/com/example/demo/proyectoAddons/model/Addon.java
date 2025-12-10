@@ -43,8 +43,8 @@ public class Addon {
     @Length(min = 100, max = 1000)
     private String descripcion;
 
-    @Column(name = "likes", nullable = false)
-    private int likes = 0;
+    @Column(name = "likes")
+    private Integer likes = 0;
 
     @ManyToMany(mappedBy = "addons")
     @JsonBackReference

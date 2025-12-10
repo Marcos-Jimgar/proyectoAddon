@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,6 +32,16 @@ public class Usuario {
     @Length(min = 2, max = 60)
     private String nombre;
 
+    @Column(name = "email", nullable = false, unique = true)
+    @NotBlank
+    @Email
+    private String email;
+
+    @Column(name = "password", nullable = false)
+    @NotBlank
+    @Length(min = 6, max = 100)
+    private String password;
+
     @Column(name = "es_pago", nullable = false)
     private Boolean esDePago;
 
@@ -44,8 +55,8 @@ public class Usuario {
     @JsonBackReference(value = "creador-usuario")
     private Creador creador;
 
+    // Un usuario puede ser administrador (relación 1:1 inversa)
     @OneToOne(mappedBy = "usuario")
     @JsonBackReference(value = "admin-usuario")
     private Administrador administrador;
-
 }

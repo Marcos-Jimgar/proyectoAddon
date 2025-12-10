@@ -23,4 +23,13 @@ public class UsuarioService {
     public void borrarUsuarios() {
         usuarioRepository.deleteAll(); // Borra todos los usuarios
     }
+
+    public boolean usuarioExiste(Long id) {
+    return usuarioRepository.findById(id).isPresent();
+    }
+
+    public Usuario devolverUsuario(Long id) {
+        return usuarioRepository.findById(id).orElse(null);
+    }
+
 }
