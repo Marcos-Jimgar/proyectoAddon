@@ -18,7 +18,6 @@ import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
-
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/subscripcion")
@@ -32,33 +31,34 @@ public class SubscripcionController {
     @Autowired
     private JWTService jwtService;
 
+    @PostMapping("/susbscribe/{idCreador}")
+    public ResponseEntity<?> createSubscripcion(
+            @RequestHeader(name = "Authorization", required = false) String authHeader, @PathVariable Long idCreador) {
 
-@PostMapping("/susbscribe/{idCreador}")
-public ResponseEntity<?> createSubscripcion(@RequestHeader(name = "Authorization", required = false) String authHeader,@PathVariable Long idCreador) {
-    
-    Long userId = jwtService.obtenerId(authHeader);
-    Creador creadoraSuscribir = creadorService.devolverCreador(idCreador);
-    Usuario nuevoSubscriptor = usuarioService.devolverUsuario(userId);
+        Long userId = jwtService.obtenerId(authHeader);
+        Creador creadoraSuscribir = creadorService.devolverCreador(idCreador);
+        Usuario nuevoSubscriptor = usuarioService.devolverUsuario(userId);
 
         if (userId == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Token inválido o expirado"));
         }
-        
+
         if (creadoraSuscribir == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "Creador No Valido"));
         }
 
-    Subscripcion objSubs = new Subscripcion();
+        Subscripcion objSubs = new Subscripcion();
         objSubs.setNotificar(false);
         objSubs.setCreador(creadoraSuscribir);
         objSubs.setUsuario(nuevoSubscriptor);
 
-    return ResponseEntity.ok(subsService.createSubscripcion(objSubs));
-}
+        return ResponseEntity.ok(subsService.createSubscripcion(objSubs));
+    }
 
     @GetMapping("/subscritos")
-    public ResponseEntity<?> verSubscripciones(@RequestHeader(name = "Authorization", required = false) String authHeader) {
-    
+    public ResponseEntity<?> verSubscripciones(
+            @RequestHeader(name = "Authorization", required = false) String authHeader) {
+
         Long userId = jwtService.obtenerId(authHeader);
 
         if (userId == null) {
@@ -68,10 +68,10 @@ public ResponseEntity<?> createSubscripcion(@RequestHeader(name = "Authorization
         return ResponseEntity.ok(subsService.getSubscribidos(userId));
     }
 
-
     @PutMapping("modificar/{idCreador}")
-    public ResponseEntity<?> modificarNotificaciones(@RequestHeader(name = "Authorization", required = false) String authHeader,@PathVariable Long idCreador) {
-        
+    public ResponseEntity<?> modificarNotificaciones(
+            @RequestHeader(name = "Authorization", required = false) String authHeader, @PathVariable Long idCreador) {
+
         Long userId = jwtService.obtenerId(authHeader);
         Creador creador = creadorService.devolverCreador(idCreador);
 
@@ -83,9 +83,10 @@ public ResponseEntity<?> createSubscripcion(@RequestHeader(name = "Authorization
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "Creador No Valido"));
         }
 
-        boolean respuesta =  subsService.modificarNotificaciones(subsService.getSubcripcionID(idCreador, userId));
+        // la respuesta nunca dara false en este caso, ya que miramos antea.
+        boolean respuesta = subsService.modificarNotificaciones(subsService.getSubcripcionID(idCreador, userId));
 
-        return ResponseEntity.ok(Map.of("respuesta","Subscripcion alterada"));
+        return ResponseEntity.ok(Map.of("respuesta", "Subscripcion alterada"));
     }
 
 }

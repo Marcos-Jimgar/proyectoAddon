@@ -79,3 +79,25 @@ DROP TABLE IF EXISTS usuario;
 DROP TABLE IF EXISTS addon;
 
 //me falta el añadir un creador al addon
+//LOGIN
+GET  | http://localhost:8081/api/auth/login
+GET  | http://localhost:8081/api/auth/removerJWT
+GET  | http://localhost:8081/api/auth/renovarJWT
+
+//ADMIN
+POST | http://localhost:8081/api/administrador > Creamos admin
+GET  | http://localhost:8081/api/administrador/consultar-creadores
+GET  | http://localhost:8081/api/administrador/consultar-usuarios
+
+//USER
+POST | http://localhost:8081/api/usuario > Crea Usuario
+GET  | http://localhost:8081/api/usuario > Ver informacion
+GET  | http://localhost:8081/api/usuario/{id} > Ver si un usuario existe
+
+//CREADOR
+GET  | http://localhost:8081/api/creador > Transformar usuario a creador
+
+//SUBSCRIBE
+POST | http://localhost:8081/api/subscripcion/susbscribe/{idCreador} > Suscribirse al creador
+GET  | http://localhost:8081/api/subscripcion/subscritos > Ver a que creadores de has subscritos
+PUT  | http://localhost:8081/api/subscripcion/modificar/{idCreador} > Altera entre true o false las notificaciones del creador suscrito

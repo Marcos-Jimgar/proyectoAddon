@@ -59,7 +59,10 @@ public class JWTService {
      * @return ID del usuario o null si no es válido
      */
     public Long obtenerId(String authHeader) {
-        String token = authHeader.substring(7);
+        String token = null;
+        if (authHeader != null) {
+            token = authHeader.substring(7);
+        }
         try {
             return Long.valueOf(Jwts.parserBuilder()
                     .setSigningKey(secretKey)
