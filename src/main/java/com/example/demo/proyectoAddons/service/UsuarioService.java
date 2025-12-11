@@ -13,6 +13,7 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository; 
     public Usuario createUsuario(Usuario usuario) {
+        
         return usuarioRepository.save(usuario); 
     }
 
@@ -31,6 +32,24 @@ public class UsuarioService {
     public Usuario devolverUsuario(Long id) {
         return usuarioRepository.findById(id).orElse(null);
     }
+     public Long devolverUsuarioPorCorreo(String correo) {
+        Long id = null;
+        for (Usuario userAct : this.getAllUsuarios()) {
+            if (userAct.getEmail().equals(correo)) {
+                id = userAct.getId();
+            }
+        }
+        return id;
+    }
 
+    public boolean verificarUsuario(Usuario user) {
+        boolean esVerficado = false;
+        for (Usuario userAct : this.getAllUsuarios()) {
+            if (user.getEmail().equals(userAct.getEmail()) && user.getPassword().equals(userAct.getPassword())) {
+                esVerficado = true;
+            }
+        }
+        return esVerficado;
+    }
 }
 

@@ -18,16 +18,16 @@ public class JWTService {
 
     /**
      * Genera un token JWT con la información básica del usuario.
-     * @param username Nombre del usuario
+     * @param nombre Nombre del usuario
      * @param id ID del usuario (Long)
      * @return Token firmado en formato JWT
      */
-    public String generarToken(String username, Long id) {
+    public String generarToken(String nombre, Long id) {
         long ahora = System.currentTimeMillis();
         long expiracion = 1000 * 60 * 60; // 1 hora de validez
 
         return Jwts.builder()
-                .setSubject(username)
+                .setSubject(nombre)
                 .claim("id", id) // Agregamos la ID del usuario
                 .setIssuedAt(new Date(ahora))
                 .setExpiration(new Date(ahora + expiracion))
@@ -58,14 +58,15 @@ public class JWTService {
      * @param token Token JWT recibido
      * @return ID del usuario o null si no es válido
      */
-    public Long obtenerId(String token) {
+    public Long obtenerId(String authHeader) {
+        String token = authHeader.substring(7);
         try {
-            return (Long) Jwts.parserBuilder()
+            return Long.valueOf(Jwts.parserBuilder()
                     .setSigningKey(secretKey)
                     .build()
                     .parseClaimsJws(token)
                     .getBody()
-                    .get("id");
+                    .get("id").toString());
         } catch (Exception e) {
             return null; // token inválido o expirado
         }

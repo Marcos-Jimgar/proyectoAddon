@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cliente JWT – Registro</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      max-width: 700px;
+      margin: 2rem auto;
+      background: #f9fafb;
+      color: #333;
+    }
+    h1 { text-align: center; color: #1e40af; }
+    fieldset { 
+      border-radius: 10px;
+      border: 1px solid #cbd5e1;
+      background: white;
+      padding: 1rem 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+    input, button, textarea {
+      font-size: 1rem;
+      padding: 0.4rem;
+      border-radius: 6px;
+      border: 1px solid #cbd5e1;
+    }
+    input[type="text"], input[type="password"], input[type="email"] {
+      width: 98%;
+    }
+    button {
+      cursor: pointer;
+      background: #2563eb;
+      color: white;
+      border: none;
+      margin-right: 0.5rem;
+    }
+    button:hover { background: #1e3a8a; }
+    textarea { width: 100%; height: 150px; }
+    .token-box {
+      word-break: break-all;
+      padding: .5rem;
+      border: 1px solid #ccc;
+      background: #f7f7f7;
+      border-radius: 6px;
+      margin-top: 0.5rem;
+    }
+    .ok { color: green; }
+    .error { color: red; }
+  </style>
+</head>
+<body>
+  <h1>Cliente JWT – Registro de Usuario</h1>
+
+  <fieldset>
+    <legend>Configuración del servidor</legend>
+    <label>
+      URL base del backend:
+      <input id="baseUrl" type="text" value="http://localhost:8081/api/usuario">
+    </label>
+  </fieldset>
+
+  <fieldset>
+    <legend>Registro</legend>
+    <label>Nombre:</label>
+    <input id="nombre" type="text" value=""><br><br>
+    <label>Correo Electrónico:</label>
+    <input id="email" type="email" value=""><br><br>
+    <label>Contraseña:</label>
+    <input id="password" type="password" value=""><br><br>
+    <label>¿Es usuario de pago?</label>
+    <input id="esDePago" type="checkbox" value="true"><br><br>
+    <button id="btnRegister">Registrar Usuario</button>
+    <p id="registerStatus"></p>
+  </fieldset>
+
+  <fieldset>
+    <legend>Respuesta del servidor</legend>
+    <p>Respuesta del servidor:</p>
+    <textarea id="respuesta" readonly></textarea>
+  </fieldset>
+
+  <script>
+    const baseUrlInput = document.getElementById("baseUrl");
+    const nombreInput = document.getElementById("nombre");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const esDePagoInput = document.getElementById("esDePago");
+    const btnRegister = document.getElementById("btnRegister");
+    const registerStatus = document.getElementById("registerStatus");
+    const respuestaArea = document.getElementById("respuesta");
+
+    // Función para registrar usuario
+    async function registerUsuario() {
+      const baseUrl = baseUrlInput.value.trim();
+      const nombre = nombreInput.value.trim();
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+      const esDePago = esDePagoInput.checked;
+
+      registerStatus.textContent = "Enviando registro...";
+      registerStatus.className = "";
+
+      try {
+        const res = await fetch(baseUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ nombre, email, password, esDePago })
+        });
+
+        if (!res.ok) {
+          const text = await res.text();
+          registerStatus.textContent = "Error en registro: " + res.status + " - " + text;
+          registerStatus.className = "error";
+          respuestaArea.value = "";
+          return;
+        }
+
+        const data = await res.json();
+        respuestaArea.value = "Usuario registrado exitosamente. Datos del usuario:\n\n" + JSON.stringify(data, null, 2);
+
+        registerStatus.textContent = "Registro correcto. Usuario creado.";
+        registerStatus.className = "ok";
+      } catch (err) {
+        registerStatus.textContent = "Error de red: " + err;
+        registerStatus.className = "error";
+      }
+    }
+
+    btnRegister.addEventListener("click", registerUsuario);
+  </script>
+</body>
+</html>

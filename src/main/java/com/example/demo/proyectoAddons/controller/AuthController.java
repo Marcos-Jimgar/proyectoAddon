@@ -1,18 +1,24 @@
 package com.example.demo.proyectoAddons.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.proyectoAddons.model.Usuario;
 import com.example.demo.proyectoAddons.service.JWTService;
+import com.example.demo.proyectoAddons.service.UsuarioService;
 
 import java.util.Map;
 
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/auth")
+
 public class AuthController {
+
+    @Autowired
+    private UsuarioService usuarioService;
 
     private final JWTService jwtService;
 
@@ -20,26 +26,20 @@ public class AuthController {
         this.jwtService = jwtService;
     }
 
-    //EVENTUALMENTE CAPAR LOS CONTROLLERS
-
-    //Valida las credenciales y devuelve un token JWT si son correctas.
+    // Valida las credenciales y devuelve un token JWT si son correctas.
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Usuario req) {
+        // El usuario SOLO nos pasa el email y contraseña
 
-        String passUser = null;
-        // Lógica adaptada para validar las credenciales de los usuarios. (principal, mirar contraseña)
+        if (!usuarioService.verificarUsuario(req)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Credenciales inválidas"));
+        }
 
-        // Ejemplo de validación de usuario (se debe adaptar a tu lógica de usuarios).
-        // if (mapaUsuarios.containsKey(req.getUser()))
-        //     passUser = mapaUsuarios.get(req.getUser()).getPassword();
+        Usuario userVerificado = usuarioService
+                .devolverUsuario(usuarioService.devolverUsuarioPorCorreo(req.getEmail()));
 
-        // if (!mapaUsuarios.containsKey(req.getUser()) || !req.getPassword().equals(passUser)) {
-        //     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Credenciales inválidas"));
-        // }
-
-        Long usuarioId = req.getId();
-        String username = req.getNombre();
-
+        Long usuarioId = userVerificado.getId();
+        String username = userVerificado.getNombre();
 
         String token = jwtService.generarToken(username, usuarioId);
 
@@ -49,19 +49,29 @@ public class AuthController {
                 "expiracion", "1 hora"));
     }
 
-    //Elimina el token.
+    @GetMapping("/testlogin")
+    public ResponseEntity<?> testear(@RequestHeader(name = "Authorization", required = false) String authHeader) {
+        Long userId = jwtService.obtenerId(authHeader);
+        if (userId == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Token inválido o expirado"));
+        }
+        return ResponseEntity.ok(Map.of("userId", userId));
+    }
+
+    // Elimina el token.
     @GetMapping("/removerJWT")
     public ResponseEntity<?> remover(@RequestHeader(name = "Authorization", required = false) String authHeader) {
-        
+
         return ResponseEntity.ok(Map.of("respuesta", "Token Borrado"));
     }
 
     // Renueva el token JWT. Valida el token y genera uno nuevo.
     @GetMapping("/renovarJWT")
     public ResponseEntity<?> renovar(@RequestHeader(name = "Authorization", required = false) String authHeader) {
-        
+
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error", "Token no proporcionado o formato incorrecto"));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("error", "Token no proporcionado o formato incorrecto"));
         }
 
         String token = authHeader.substring(7); // Elimina el prefijo "Bearer "

@@ -1,6 +1,6 @@
 package com.example.demo.proyectoAddons.service;
 
-
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,30 +26,59 @@ public class SubscripcionService {
     }
 
     public boolean createSubscripcion(Long idCreador, Long idUsuario) {
-        Subscripcion sub1 = null;
+
         Usuario usu1 = usuarioService.devolverUsuario(idUsuario);
         Creador cre1 = creadorService.devolverCreador(idCreador);
 
+        if (usu1 == null || cre1 == null) {
+            return false;
+        }
+
+        Subscripcion sub1 = new Subscripcion();
+        sub1.setUsuario(usu1);
+        sub1.setCreador(cre1);
         sub1.setNotificar(false);
 
-        if (usu1 !=null && cre1 !=null) {
-            sub1.setUsuario(usu1);
-            sub1.setCreador(cre1);
-            this.createSubscripcion(sub1);
-            return true;
-        }
-        
-        return false;
+        subscripcionRepository.save(sub1);
+        return true;
     }
 
-    public List<Subscripcion> getAll() {
+    public List<Subscripcion> getAllSubscripciones() {
         return subscripcionRepository.findAll();
     }
 
-    public String borra() {
-        subscripcionRepository.deleteAll();
-        return "Datos Borrados";
+    public List<Creador> getSubscribidos(Long id) {
+        List<Creador> listaCreadores = new ArrayList<>();
+
+        for (Subscripcion subActu : this.getAllSubscripciones()) {
+            if (subActu.getUsuario().getId() == id) {
+                listaCreadores.add(subActu.getCreador());
+            }
+        }
+
+        return listaCreadores;
+    }
+    public Long getSubcripcionID(Long idCreador, Long idUsuario) {
+        for (Subscripcion subActu : this.getAllSubscripciones()) {
+            if ((subActu.getCreador().getId()==idCreador) && (subActu.getUsuario().getId() ==idUsuario)) {
+                return subActu.getSubscripcion_id();
+            }
+        }
+        return null;
     }
 
+    public boolean modificarNotificaciones(Long idSubscripcion) {
+
+        Subscripcion sub = subscripcionRepository.findById(idSubscripcion).orElse(null);
+
+        if (sub == null) {
+            return false;
+        }
+
+        sub.setNotificar(!sub.isNotificar());
+
+        subscripcionRepository.save(sub);
+        return true;
+    }
 
 }
