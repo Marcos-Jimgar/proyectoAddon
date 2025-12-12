@@ -50,12 +50,12 @@ public class Usuario {
     @JsonManagedReference(value = "usuario-subs")
     private List<Subscripcion> subscripciones;
 
-    // Un usuario puede ser creador (relación 1:1 inversa)
+    // Un usuario puede ser creador     
     @OneToOne(mappedBy = "usuario")
     @JsonBackReference(value = "creador-usuario")
     private Creador creador;
 
-    // Un usuario puede ser administrador (relación 1:1 inversa)
+    // Un usuario puede ser administrador
     @OneToOne(mappedBy = "usuario")
     @JsonBackReference(value = "admin-usuario")
     private Administrador administrador;

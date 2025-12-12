@@ -60,7 +60,7 @@ public class JWTService {
      */
     public Long obtenerId(String authHeader) {
         String token = null;
-        if (authHeader != null) {
+        if (authHeader != null || authHeader.length() < 7) {
             token = authHeader.substring(7);
         }
         try {

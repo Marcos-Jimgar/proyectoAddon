@@ -37,7 +37,7 @@ public class UsuarioController {
         if (userId == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Token inválido o expirado"));
         }
-
+        
         return ResponseEntity.ok(usuarioService.devolverUsuario(userId));
     }
 

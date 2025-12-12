@@ -26,7 +26,6 @@ public class Creador {
     @NotBlank
     private String especialidad;
 
-    // Relación 1:1 con Usuario (lado propietario)
     @OneToOne
     @JoinColumn(name = "usuario", referencedColumnName = "id", unique = true)
     @JsonManagedReference(value = "creador-usuario")
@@ -37,7 +36,6 @@ public class Creador {
     @JsonManagedReference(value = "creador-subs")
     private List<Subscripcion> subscripciones;
 
-    // Many-to-Many con Addon (sin anotaciones JSON aquí)
     @ManyToMany
     @JoinTable(
         name = "creador_addon",
