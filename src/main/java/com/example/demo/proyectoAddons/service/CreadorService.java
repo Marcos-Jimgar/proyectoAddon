@@ -41,4 +41,11 @@ public class CreadorService {
     public Creador devolverCreador(Long id) {
         return creadorRepository.findById(id).orElse(null);
     }
+
+    public boolean modificarEspecialidad(Long id, String especialidadNueva) {
+        Creador creadorAct = devolverCreador(id);
+        creadorAct.setEspecialidad(especialidadNueva);
+        creadorRepository.save(creadorAct);
+        return true;
+    }
 }
