@@ -51,5 +51,9 @@ public class UsuarioService {
         }
         return esVerficado;
     }
+
+     public Integer totalUsuarios() {
+        return usuarioRepository.totalUsuarios();
+    }
 }
 

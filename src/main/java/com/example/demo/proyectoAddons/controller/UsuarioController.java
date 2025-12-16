@@ -11,6 +11,7 @@ import com.example.demo.proyectoAddons.service.UsuarioService;
 
 import jakarta.validation.Valid;
 
+import java.util.List;
 import java.util.Map;
 
 @CrossOrigin(origins = "*")
@@ -47,4 +48,9 @@ public class UsuarioController {
         return usuarioService.usuarioExiste(id);
     }
 
+
+    @GetMapping("/totalusuarios")
+    public Integer depago() {
+        return usuarioService.totalUsuarios();
+    }
 }
