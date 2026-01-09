@@ -45,6 +45,7 @@ public class AuthController {
 
         return ResponseEntity.ok(Map.of(
                 "token", token,
+                "rol", "usuario",
                 "tipo", "Bearer",
                 "expiracion", "1 hora"));
     }
