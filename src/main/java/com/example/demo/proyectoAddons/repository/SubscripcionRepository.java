@@ -9,5 +9,5 @@ public interface SubscripcionRepository extends JpaRepository<Subscripcion, Long
 }
 
 //sudo -u postgres  psql
-// \c mybd 
+// \c mydb 
 // SELECT * FROM TABLE;

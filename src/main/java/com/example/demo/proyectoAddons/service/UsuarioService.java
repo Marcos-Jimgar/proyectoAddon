@@ -3,6 +3,7 @@ package com.example.demo.proyectoAddons.service;
 import com.example.demo.proyectoAddons.model.Usuario;
 import com.example.demo.proyectoAddons.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,10 +11,23 @@ import java.util.List;
 @Service
 public class UsuarioService {
 
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Autowired
     private UsuarioRepository usuarioRepository; 
+
+    public UsuarioService(PasswordEncoder passwordEncoder, UsuarioRepository usuarioRepository) {
+        this.passwordEncoder = passwordEncoder;
+        this.usuarioRepository = usuarioRepository;
+    }
+
+
+
     public Usuario createUsuario(Usuario usuario) {
-        
+        String contrseniaPlana = usuario.getPassword();
+        usuario.setPassword(passwordEncoder.encode(contrseniaPlana));
         return usuarioRepository.save(usuario); 
     }
 
@@ -45,8 +59,10 @@ public class UsuarioService {
     public boolean verificarUsuario(Usuario user) {
         boolean esVerficado = false;
         for (Usuario userAct : this.getAllUsuarios()) {
-            if (user.getEmail().equals(userAct.getEmail()) && user.getPassword().equals(userAct.getPassword())) {
-                esVerficado = true;
+            if (user.getEmail().equals(userAct.getEmail())) {
+                if (passwordEncoder.matches(user.getPassword(), userAct.getPassword())) {
+                    esVerficado = true;
+                }
             }
         }
         return esVerficado;

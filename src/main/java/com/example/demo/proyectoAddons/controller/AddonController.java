@@ -21,7 +21,7 @@ public Addon createPersona(@Valid @RequestBody Addon addonContent) {
 return addonService.createAddon(addonContent);
 }
 @GetMapping
-public List<Addon> getAllUsuarios() {
+public List<Addon> gettAllAddons() {
 return addonService.getAlLAddons();
 }
 

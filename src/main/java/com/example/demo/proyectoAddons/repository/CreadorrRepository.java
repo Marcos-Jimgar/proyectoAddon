@@ -10,5 +10,5 @@ public interface CreadorrRepository extends JpaRepository<Creador, Long> {
 }
 
 //sudo -u postgres  psql
-// \c mybd 
+// \c mydb 
 // SELECT * FROM TABLE;

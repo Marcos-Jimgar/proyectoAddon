@@ -10,5 +10,5 @@ public interface AdministradorRepository extends JpaRepository<Administrador, Lo
 }
 
 //sudo -u postgres  psql
-// \c mybd 
+// \c mydb  
 // SELECT * FROM TABLE;

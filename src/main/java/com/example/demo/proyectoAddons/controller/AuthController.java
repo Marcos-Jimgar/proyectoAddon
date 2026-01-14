@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.proyectoAddons.model.Usuario;
+import com.example.demo.proyectoAddons.service.CreadorService;
 import com.example.demo.proyectoAddons.service.JWTService;
 import com.example.demo.proyectoAddons.service.UsuarioService;
 
@@ -19,6 +20,9 @@ public class AuthController {
 
     @Autowired
     private UsuarioService usuarioService;
+
+    @Autowired
+    private CreadorService creadorService;
 
     private final JWTService jwtService;
 
@@ -43,9 +47,14 @@ public class AuthController {
 
         String token = jwtService.generarToken(username, usuarioId);
 
+        String rolUsuario = "usuario";
+        if (creadorService.creadorExiste(usuarioId)) {
+            rolUsuario = "creador";
+        }
+
         return ResponseEntity.ok(Map.of(
                 "token", token,
-                "rol", "usuario",
+                "rol", rolUsuario,
                 "tipo", "Bearer",
                 "expiracion", "1 hora"));
     }
