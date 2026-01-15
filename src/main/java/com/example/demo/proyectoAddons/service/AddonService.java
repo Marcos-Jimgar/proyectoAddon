@@ -32,8 +32,8 @@ public class AddonService {
     }
 
     @Transactional
-    public void linkAddonCreador(Long idCreador, Long idAddon) {
-        addonRepository.insertarCreadorAddon(idCreador,idAddon);
+    public void linkAddonCreador(Long idCreador, Long idAddon, String status) {
+        addonRepository.insertarCreadorAddon(idCreador,idAddon,status);
     } 
 
     @Transactional

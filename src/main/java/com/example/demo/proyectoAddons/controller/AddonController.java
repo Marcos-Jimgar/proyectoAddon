@@ -42,7 +42,7 @@ public class AddonController {
         }
     
         Addon addonCreado = addonService.createAddon(addonContent);
-        addonService.linkAddonCreador(userId, addonCreado.getId());
+        addonService.linkAddonCreador(userId, addonCreado.getId(), "creador");
         return ResponseEntity.ok(addonCreado);
     }
 

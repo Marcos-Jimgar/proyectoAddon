@@ -12,7 +12,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 @Query(value = "SELECT * FROM usuario WHERE usuario.es_pago = true",nativeQuery = true)
 List<Usuario> listaDePago();
 
-0
+
 
 
 //private List<Usuario> findByEsDePago(Boolean esDePago);

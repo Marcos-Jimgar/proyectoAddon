@@ -36,11 +36,7 @@ public class Creador {
     @JsonManagedReference(value = "creador-subs")
     private List<Subscripcion> subscripciones;
 
-    @ManyToMany
-    @JoinTable(
-        name = "creador_addon",
-        joinColumns = @JoinColumn(name = "creador_id"),
-        inverseJoinColumns = @JoinColumn(name = "addon_id")
-    )
-    private List<Addon> addons;
+    @OneToMany(mappedBy = "creador")
+    private List<CreadorAddon> creadorAddons;
+
 }

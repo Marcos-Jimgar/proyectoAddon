@@ -47,8 +47,7 @@ public class Addon {
     @Column(name = "likes")
     private Integer likes = 0;
 
-    @ManyToMany(mappedBy = "addons")
-    //@JsonBackReference
-    @JsonIgnore
-    private List<Creador> creadores;
+    @OneToMany(mappedBy = "addon")
+    private List<CreadorAddon> creadorAddons;
+
 }
