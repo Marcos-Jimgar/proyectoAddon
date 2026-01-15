@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -47,6 +48,7 @@ public class Addon {
     private Integer likes = 0;
 
     @ManyToMany(mappedBy = "addons")
-    @JsonBackReference
+    //@JsonBackReference
+    @JsonIgnore
     private List<Creador> creadores;
 }

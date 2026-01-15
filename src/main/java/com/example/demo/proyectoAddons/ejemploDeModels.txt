@@ -95,7 +95,7 @@ GET  | http://localhost:8081/api/usuario > Ver informacion
 GET  | http://localhost:8081/api/usuario/{id} > Ver si un usuario existe
 
 //CREADOR
-GET  | http://localhost:8081/api/creador > Transformar usuario a creador
+POST  | http://localhost:8081/api/creador > Transformar usuario a creador
 
 //SUBSCRIBE
 POST | http://localhost:8081/api/subscripcion/susbscribe/{idCreador} > Suscribirse al creador

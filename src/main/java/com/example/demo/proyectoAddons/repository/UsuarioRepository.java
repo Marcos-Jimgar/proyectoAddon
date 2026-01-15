@@ -12,8 +12,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 @Query(value = "SELECT * FROM usuario WHERE usuario.es_pago = true",nativeQuery = true)
 List<Usuario> listaDePago();
 
-@Query(value = "SELECT COUNT(*) FROM usuario",nativeQuery = true)
-Integer totalUsuarios();
+0
 
 
 //private List<Usuario> findByEsDePago(Boolean esDePago);
