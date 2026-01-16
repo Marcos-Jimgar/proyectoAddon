@@ -101,3 +101,14 @@ POST  | http://localhost:8081/api/creador > Transformar usuario a creador
 POST | http://localhost:8081/api/subscripcion/susbscribe/{idCreador} > Suscribirse al creador
 GET  | http://localhost:8081/api/subscripcion/subscritos > Ver a que creadores de has subscritos
 PUT  | http://localhost:8081/api/subscripcion/modificar/{idCreador} > Altera entre true o false las notificaciones del creador suscrito
+
+//Addon
+POST | http://localhost:8081/api/addon > SUBES UN ADDON, tu status del addon es creador
+GET  | http://localhost:8081/api/addon > DEVUELVE TODO LOS ADDONS
+GET  | http://localhost:8081/api/addon/creadores/{idAddon} > DEVUELVE LOS participantes de un addon
+GET  | http://localhost:8081/api/addon/invitar/enviar/{idAddon}/{idCreador} > invitar un usuario a un addon
+GET  | http://localhost:8081/api/addon/invitar/aceptar/{idAddon} > Aceptas invitacion enviada
+GET  | http://localhost:8081/api/addon/invitar/rechazar/{idAddon} > Rechazas invitacion enviada
+GET  | http://localhost:8081/api/addon/mis-creaciones > Visualizas tus creacioes, siendo colaborador o creador
+GET  | http://localhost:8081/api/addon/mis-invitaciones > Visualizas tus invitaciones, solo las pendientes
+PUT  | http://localhost:8081/api/addon/darlike/{idAddon} > das like a un addon

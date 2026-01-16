@@ -16,6 +16,8 @@ import jakarta.validation.Valid;
 
 import java.util.List;
 import java.util.Map;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -37,6 +39,11 @@ public class CreadorController {
         if (userId == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Token inválido o expirado"));
         }
+
+        if (creadorService.creadorExiste(userId)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Ya eres un creador"));
+        }
+
         Creador creadorAct = new Creador();
         creadorAct.setUsuario(usuarioService.devolverUsuario(userId));
         // Luego el usuario podras especificar su especialidad
@@ -47,8 +54,9 @@ public class CreadorController {
 
     @PutMapping("modificar/espacialidad")
     public ResponseEntity<?> modificarESpecialidad(
-            @RequestHeader(name = "Authorization", required = false) String authHeader, @Valid @RequestBody String espacialiadNueva) {
-    Long userId = jwtService.obtenerId(authHeader);
+            @RequestHeader(name = "Authorization", required = false) String authHeader,
+            @Valid @RequestBody String espacialiadNueva) {
+        Long userId = jwtService.obtenerId(authHeader);
 
         if (userId == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Token inválido o expirado"));
